@@ -59,7 +59,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: 220px; /* место под меню */
+    padding-bottom: 220px; /* место под подвал */
 }
 
 .main-cow-btn {
@@ -84,7 +84,7 @@ body {
 .multiplier-bar {
     position: absolute;
     left: 40px;
-    bottom: 260px; /* выше меню */
+    bottom: 260px; /* выше подвала */
     width: 24px;
     height: 250px;
     border: 4px solid #000;
@@ -94,7 +94,7 @@ body {
 }
 
 .multiplier-bar::after {
-    content: ""; /* черта */
+    content: ""; /* черта на 50% */
     position: absolute;
     bottom: 50%; 
     left: 0;
@@ -129,29 +129,52 @@ body {
     color: #fff;
 }
 
-/* ПАНЕЛЬ АПГРЕЙДОВ В 2 РЯДА С ФИКСИРОВАННЫМИ БУКВАМИ */
+/* ПАНЕЛЬ УЛУЧШЕНИЙ */
 #upgrades-container, .upgrades-list {
     width: 100%;
-    height: 220px; /* фикс высота подвала */
-    background-color: #000000 !important; /* плотный черный цвет */
+    height: 220px;
+    background-color: #000000 !important;
     padding: 20px 40px;
-    border-top: 4px solid #fff; /* пиксельная рамка сверху */
+    border-top: 4px solid #fff;
     position: absolute;
     bottom: 0;
     left: 0;
     z-index: 99;
-    
     display: grid !important;
-    grid-template-columns: repeat(4, 1fr) !important; /* 4 колонки */
-    grid-template-rows: repeat(2, 1fr) !important; /* 2 ряда */
+    grid-template-columns: repeat(4, 1fr) !important;
+    grid-template-rows: repeat(2, 1fr) !important;
     gap: 15px;
+    transition: transform 0.3s ease-in-out; /* анимация скрытия */
+}
+
+.upgrades-hidden {
+    transform: translateY(220px); /* прячем за экран */
+}
+
+/* КНОПКА СКРЫТЬ/ПОКАЗАТЬ */
+.menu-toggle-btn {
+    position: absolute;
+    bottom: 220px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #000;
+    border: 3px solid #fff;
+    border-bottom: none;
+    color: #fff;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    padding: 6px 15px;
+    cursor: pointer;
+    z-index: 100;
+    outline: none;
+    transition: bottom 0.3s ease-in-out;
 }
 
 /* КНОПКА УЛУЧШЕНИЯ */
 .upgrade-item {
     width: 100%;
     height: 100%;
-    background-color: #1a1a1a; /* темно-серый фон кнопок */
+    background-color: #1a1a1a;
     border: 3px solid #fff;
     padding: 10px 15px;
     display: flex;
@@ -164,7 +187,7 @@ body {
 }
 
 .upgrade-item:disabled {
-    opacity: 0.25; /* сильное затемнение закрытых кнопок */
+    opacity: 0.25;
     background-color: #111;
     border-color: #555;
     color: #555;
@@ -202,7 +225,7 @@ body {
     height: auto;
 }
 
-/* НАСТРОЙКИ */
+/* НАСТРОЙКИ КНОПКА */
 .settings-toggle {
     position: absolute;
     top: 30px;
@@ -221,6 +244,7 @@ body {
     transform: scale(0.95);
 }
 
+/* НАСТРОЕЧНОЕ ОКНО */
 .modal-overlay {
     position: fixed;
     top: 0;

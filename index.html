@@ -11,10 +11,9 @@
 </head>
 <body>
 
-    <!-- Главный экран на весь монитор. Первый фон подключен инлайном -->
     <div id="game-screen" class="cow-game" style="background-image: url('fon/1.png');">
 
-        <!-- Счетчик -->
+        <!-- СЧЕТ -->
         <header class="score-board">
             <div class="total-cows">
                 <img src="headCow/CowHead.png" alt="mini-cow" class="mini-cow" height="40px">
@@ -25,36 +24,31 @@
             </div>
         </header>
 
-        <!-- Игровая зона с коровой и множителем -->
+        <!-- ПОЛЕ -->
         <main class="game-field">
-            <!-- Множитель x2 (слева) -->
             <div class="multiplier-bar">
                 <div class="bar-fill" style="height: 0%;"></div>
                 <span class="bar-label">2X</span>
             </div>
 
-            <!-- Корова --> 
             <button class="main-cow-btn">
                 <img src="Normal/Cow.png" alt="Cow" class="pixel-image">
             </button>
         </main>
 
-        <!-- Апгрейды -->
+        <!-- УЛУЧШЕНИЯ -->
+        <button id="toggle-upgrades-btn" class="menu-toggle-btn">▼</button>
         <section id="upgrades-container" class="upgrades-list"></section>
 
-        <!-- Кнопка вызова настроек (в верхнем правом углу) -->
+        <!-- НАСТРОЙКИ КНОПКА -->
         <button id="settings-open-btn" class="settings-toggle">⚙️</button>
 
-        
+        <!-- НАСТРОЙКИ ОКНО -->
         <div id="settings-modal" class="modal-overlay">
-            
-           
             <div class="modal-window">
-                <!-- Крестик для закрытия -->
                 <button id="settings-close-btn" class="modal-close">X</button>
                 <h2>НАСТРОЙКИ</h2>
                 
-              
                 <div class="setting-row">
                     <span class="setting-title">ФОН:</span>
                     <div class="switcher">
@@ -62,9 +56,8 @@
                         <span id="bg-name" class="switch-value">Фон 1</span>
                         <button id="bg-next" class="switch-btn">&gt;</button>                 
                     </div>
-                </div> 
+                </div>
 
-                
                 <div class="setting-row">
                     <span class="setting-title">КОРОВА:</span>
                     <div class="switcher">
@@ -72,12 +65,11 @@
                         <span id="cow-name" class="switch-value">Обычная</span>
                         <button id="cow-next" class="switch-btn">&gt;</button>
                     </div>
-                </div> <!-- Закрыли ряд коровы -->
+                </div>
+            </div>
+        </div>
 
-            </div> <!-- Конец окна modal-window -->
-        </div> <!-- Конец подложки modal-overlay -->
-
-    </div> <!-- Конец cow-game -->
+    </div>
 
     <script src="script.js"></script>
 </body>

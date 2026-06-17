@@ -11,11 +11,12 @@ const gameScreen = document.getElementById('game-screen');
 const mainCowImg = document.querySelector('.pixel-image');
 const bgNameText = document.getElementById('bg-name');
 const cowNameText = document.getElementById('cow-name');
+const toggleMenuBtn = document.getElementById('toggle-upgrades-btn');
+const menuContainer = upgradesContainer || document.querySelector('.upgrades-list');
 
 let score = 0;
 let clickPower = 1;
 let totalCps = 0; 
-
 let multiplierProgress = 0; 
 let isMultiplierActive = false; 
 const multiplierThreshold = 50; 
@@ -44,17 +45,29 @@ const cows = [
     { name: 'Слаймовая корова', url: 'Normal/Cow_Slime.png' }
 ];
 
+function calculateCps() {
+    let currentCps = 0;
+    let currentClickPower = 1;
+    
+    upgradesData.forEach(upgrade => {
+        if (upgrade.type === 'cps') {
+            currentCps += upgrade.level * upgrade.power;
+        } else if (upgrade.type === 'click') {
+            currentClickPower = upgrade.level * upgrade.power;
+        }
+    });
+    
+    totalCps = currentCps;
+    clickPower = currentClickPower;
+}
+
 function loadGame() {
     const savedScore = localStorage.getItem('cow_score');
-    const savedClickPower = localStorage.getItem('cow_clickPower');
-    const savedCps = localStorage.getItem('cow_cps');
     const savedUpgrades = localStorage.getItem('cow_upgrades');
     const savedBg = localStorage.getItem('cow_bg');
     const savedCow = localStorage.getItem('cow_cow');
 
     if (savedScore !== null) score = Math.round(parseFloat(savedScore));
-    if (savedClickPower !== null) clickPower = parseInt(savedClickPower);
-    if (savedCps !== null) totalCps = parseInt(savedCps);
     if (savedBg !== null) {
         currentBgIndex = parseInt(savedBg);
         gameScreen.style.backgroundImage = `url('${backgrounds[currentBgIndex]}')`;
@@ -67,25 +80,21 @@ function loadGame() {
     }
     if (savedUpgrades !== null) upgradesData = JSON.parse(savedUpgrades);
     
+    calculateCps();
     scoreCounter.textContent = score;
     cpsCounter.textContent = totalCps;
 }
 
 function saveGame() {
     localStorage.setItem('cow_score', score);
-    localStorage.setItem('cow_clickPower', clickPower);
-    localStorage.setItem('cow_cps', totalCps);
     localStorage.setItem('cow_upgrades', JSON.stringify(upgradesData));
     localStorage.setItem('cow_bg', currentBgIndex);
     localStorage.setItem('cow_cow', currentCowIndex);
 }
 
 function renderUpgrades() {
-    // Находим контейнер по классу ленты, если ID из HTML потерялся
-    const container = upgradesContainer || document.querySelector('.upgrade-list');
-    if (!container) return;
-    
-    container.innerHTML = ''; 
+    if (!menuContainer) return;
+    menuContainer.innerHTML = ''; 
     
     upgradesData.forEach((upgrade) => {
         const btn = document.createElement('button');
@@ -104,24 +113,18 @@ function renderUpgrades() {
         `;
         
         btn.addEventListener('click', (e) => {
-            e.stopPropagation(); // Стопаем клик, чтобы не триггерить корову под кнопкой
+            e.stopPropagation();
             if (score >= upgrade.cost) {
                 score -= upgrade.cost;
                 upgrade.level += 1;
-                
-                if (upgrade.type === 'click') {
-                    clickPower += upgrade.power;
-                } else if (upgrade.type === 'cps') {
-                    totalCps += upgrade.power;
-                }
-                
                 upgrade.cost = Math.round(upgrade.cost * 1.5);
+                calculateCps();
                 saveGame();
                 updateUI();
             }
         });
         
-        container.appendChild(btn);
+        menuContainer.appendChild(btn);
     });
 }
 
@@ -132,8 +135,9 @@ function updateUI() {
 }
 
 setInterval(() => {
-    let currentCps = isMultiplierActive ? totalCps * 2 : totalCps;
-    score += currentCps;
+    calculateCps();
+    let passiveGain = isMultiplierActive ? totalCps * 2 : totalCps;
+    score += passiveGain;
     
     if (multiplierProgress > 0) {
         multiplierProgress -= 3;
@@ -169,6 +173,17 @@ mainCowBtn.addEventListener('click', () => {
     
     score += finalClickPower;
     updateUI();
+});
+
+toggleMenuBtn.addEventListener('click', () => {
+    menuContainer.classList.toggle('upgrades-hidden');
+    if (menuContainer.classList.contains('upgrades-hidden')) {
+        toggleMenuBtn.textContent = '▲';
+        toggleMenuBtn.style.bottom = '0px';
+    } else {
+        toggleMenuBtn.textContent = '▼';
+        toggleMenuBtn.style.bottom = '220px';
+    }
 });
 
 openSettingsBtn.addEventListener('click', () => { settingsModal.style.display = 'flex'; });
