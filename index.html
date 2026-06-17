@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cow Clicker - Fears to Fathom</title>
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Главный экран на весь монитор. Первый фон подключен инлайном -->
+    <div id="game-screen" class="cow-game" style="background-image: url('fon/1.png');">
+
+        <!-- Счетчик -->
+        <header class="score-board">
+            <div class="total-cows">
+                <img src="headCow/CowHead.png" alt="mini-cow" class="mini-cow" height="40px">
+                <span id="score-counter">0</span>
+            </div>
+            <div class="cps-text">
+                <span id="cps-counter">0</span> COWS PER SECOND
+            </div>
+        </header>
+
+        <!-- Игровая зона с коровой и множителем -->
+        <main class="game-field">
+            <!-- Множитель x2 (слева) -->
+            <div class="multiplier-bar">
+                <div class="bar-fill" style="height: 0%;"></div>
+                <span class="bar-label">2X</span>
+            </div>
+
+            <!-- Корова --> 
+            <button class="main-cow-btn">
+                <img src="Normal/Cow.png" alt="Cow" class="pixel-image">
+            </button>
+        </main>
+
+        <!-- Апгрейды -->
+        <section id="upgrades-container" class="upgrades-list"></section>
+
+        <!-- Кнопка вызова настроек (в верхнем правом углу) -->
+        <button id="settings-open-btn" class="settings-toggle">⚙️</button>
+
+        
+        <div id="settings-modal" class="modal-overlay">
+            
+           
+            <div class="modal-window">
+                <!-- Крестик для закрытия -->
+                <button id="settings-close-btn" class="modal-close">X</button>
+                <h2>НАСТРОЙКИ</h2>
+                
+              
+                <div class="setting-row">
+                    <span class="setting-title">ФОН:</span>
+                    <div class="switcher">
+                        <button id="bg-prev" class="switch-btn">&lt;</button>
+                        <span id="bg-name" class="switch-value">Фон 1</span>
+                        <button id="bg-next" class="switch-btn">&gt;</button>                 
+                    </div>
+                </div> 
+
+                
+                <div class="setting-row">
+                    <span class="setting-title">КОРОВА:</span>
+                    <div class="switcher">
+                        <button id="cow-prev" class="switch-btn">&lt;</button>
+                        <span id="cow-name" class="switch-value">Обычная</span>
+                        <button id="cow-next" class="switch-btn">&gt;</button>
+                    </div>
+                </div> <!-- Закрыли ряд коровы -->
+
+            </div> <!-- Конец окна modal-window -->
+        </div> <!-- Конец подложки modal-overlay -->
+
+    </div> <!-- Конец cow-game -->
+
+    <script src="script.js"></script>
+</body>
+</html>
